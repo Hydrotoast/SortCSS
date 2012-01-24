@@ -1,12 +1,12 @@
 // This file is part of SortCSS
 // Copyright (C) 2011 Gio Borje
 //
-// GaiaPack is free software: you can redistribute it and/or modify
+// SortCSS is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// GaiaPack is distributed in the hope that it will be useful,
+// SortCSS is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -31,7 +31,9 @@ Parser::Parser(string raw)
 void Parser::sortCSS()
 {
 	// Iterate through RuleSets
-	for (vector<RuleSet>::iterator iter = Parser::_rules.begin(); iter != Parser::_rules.end(); ++iter) {
+	for (vector<RuleSet>::iterator iter = Parser::_rules.begin(); 
+        iter != Parser::_rules.end(); 
+        ++iter) {
 		// Sort Declarations within RuleSets
 		sort(iter->Declarations.begin(), iter->Declarations.end());
 	}
@@ -39,13 +41,19 @@ void Parser::sortCSS()
 
 void Parser::printCSS()
 {
-	for (vector<RuleSet>::iterator iter = Parser::_rules.begin(); iter != Parser::_rules.end(); ++iter) {
+	for (vector<RuleSet>::iterator iter = Parser::_rules.begin(); 
+        iter != Parser::_rules.end(); 
+        ++iter) {
 		cout << iter->Selector << 
 			Parser::_template.beforeOpenBrace << '{';
 		
-		if (Parser::_lineMode == LineMode::MIXED && (iter->Declarations.size() == 1 || iter->Declarations.size() == 0)) {
+		if (Parser::_lineMode == LineMode::MIXED && 
+                (iter->Declarations.size() == 1 
+                    || iter->Declarations.size() == 0)) {
 			cout << ' ';
-			for (vector<Declaration>::iterator it = iter->Declarations.begin(); it != iter->Declarations.end(); it++) {
+			for (vector<Declaration>::iterator it = iter->Declarations.begin(); 
+                it != iter->Declarations.end(); 
+                it++) {
 				if (!it->Value.empty()) {
 					cout << it->Property << ": " << it->Value << "; ";
 				} else if (Parser::_template.removeComments == false) {
@@ -55,9 +63,13 @@ void Parser::printCSS()
 			}
 		} else {
 			cout << Parser::_template.afterOpenBrace;
-			for (vector<Declaration>::iterator it = iter->Declarations.begin(); it != iter->Declarations.end(); it++) {
+			for (vector<Declaration>::iterator it = iter->Declarations.begin(); 
+                it != iter->Declarations.end(); 
+                it++) {
 				if (!it->Value.empty()) {
-					cout << Parser::_template.beforeProperty << it->Property << Parser::_template.afterProperty << 
+					cout << Parser::_template.beforeProperty << 
+                        it->Property << 
+                        Parser::_template.afterProperty << 
 						Parser::_template.beforeValue << 
 						it->Value << 
 						Parser::_template.afterValue;
@@ -67,7 +79,9 @@ void Parser::printCSS()
 						((Parser::_lineMode == LineMode::INLINE) ? " " : "\n"); 
 				}
 			}
-			cout << Parser::_template.beforeCloseBrace << '}' << Parser::_template.afterCloseBrace;
+			cout << Parser::_template.beforeCloseBrace << 
+                '}' << 
+                Parser::_template.afterCloseBrace;
 		}
 	}
 }
@@ -75,23 +89,33 @@ void Parser::printCSS()
 string Parser::getCSS()
 {
 	Parser::_css = "";
-	for (vector<RuleSet>::iterator iter = Parser::_rules.begin(); iter != Parser::_rules.end(); ++iter) {
+	for (vector<RuleSet>::iterator iter = Parser::_rules.begin(); 
+        iter != Parser::_rules.end(); 
+        ++iter) {
 		Parser::_css += iter->Selector + 
 			Parser::_template.beforeOpenBrace + '{';
 		
-		if (Parser::_lineMode == LineMode::MIXED && (iter->Declarations.size() == 1 || iter->Declarations.size() == 0)) {
+		if (Parser::_lineMode == LineMode::MIXED 
+            && (iter->Declarations.size() == 1 
+                || iter->Declarations.size() == 0)) {
 			Parser::_css += ' ';
-			for (vector<Declaration>::iterator it = iter->Declarations.begin(); it != iter->Declarations.end(); it++) {
+			for (vector<Declaration>::iterator it = iter->Declarations.begin(); 
+                it != iter->Declarations.end(); 
+                it++) {
 				if (!it->Value.empty()) {
 					Parser::_css += it->Property + ": " + it->Value + "; ";
 				} else if (Parser::_template.removeComments == false) {
-					Parser::_css +=  Parser::_template.beforeProperty + it->Property + ' '; 
+					Parser::_css +=  Parser::_template.beforeProperty + 
+                        it->Property + 
+                        ' '; 
 				}
 			}
 			Parser::_css += "}\n";
 		} else {
 			Parser::_css += Parser::_template.afterOpenBrace;
-			for (vector<Declaration>::iterator it = iter->Declarations.begin(); it != iter->Declarations.end(); it++) {
+			for (vector<Declaration>::iterator it = iter->Declarations.begin(); 
+                it != iter->Declarations.end(); 
+                it++) {
 				if (!it->Value.empty()) {
 					Parser::_css += Parser::_template.beforeProperty + 
 						it->Property + 
